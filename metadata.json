@@ -1,0 +1,6 @@
+{
+  "name": "MusicStore Web",
+  "description": "Una tienda y reproductor de música en línea con catálogo de artistas latinos, portales para clientes y administración.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
