@@ -59,13 +59,13 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
       {/* Top action wrapper */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-display font-medium text-white mb-0.5">Gestión de Personal</h2>
-          <p className="text-gray-400 text-xs">Directorio oficial, contrataciones y responsabilidades curriculares</p>
+          <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#0F172A] mb-0.5">Gestión de Personal</h2>
+          <p className="text-[#64748B] text-xs">Directorio oficial, contrataciones y responsabilidades curriculares</p>
         </div>
 
         <button
           onClick={() => setIsAdding(true)}
-          className="bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-1.5 cursor-pointer"
+          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-1.5 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Contratar Personal (+ Planilla)</span>
@@ -73,48 +73,48 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
       </div>
 
       {successMsg && (
-        <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 p-4 rounded-xl text-xs flex items-center gap-2">
-          <Check className="w-4 h-4 bg-emerald-500/20 p-0.5 rounded-full" />
+        <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-xl text-xs flex items-center gap-2">
+          <Check className="w-4 h-4 bg-emerald-100 p-0.5 rounded-full text-emerald-600" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {/* Dynamic Summary Cards matching Screen 10 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-5 rounded-2xl flex items-center justify-between">
+        <div className="bg-white border border-purple-100/75 p-5 rounded-2xl flex items-center justify-between shadow-sm">
           <div className="flex flex-col">
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider">Planilla Activa</span>
-            <span className="text-xl sm:text-2xl font-bold text-white font-display mt-0.5">{employees.length} Curadores</span>
-            <span className="text-emerald-400 text-xxs font-mono font-bold mt-1">+5 Nuevas vacantes</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider font-semibold">Planilla Activa</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#0F172A] font-display mt-0.5">{employees.length} Curadores</span>
+            <span className="text-emerald-600 text-xxs font-mono font-bold mt-1">+5 Nuevas vacantes</span>
           </div>
-          <Users className="w-6 h-6 text-purple-400" />
+          <Users className="w-6 h-6 text-purple-600" />
         </div>
 
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-5 rounded-2xl flex items-center justify-between">
+        <div className="bg-white border border-purple-100/75 p-5 rounded-2xl flex items-center justify-between shadow-sm">
           <div className="flex flex-col">
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider">Atención de Cuentas</span>
-            <span className="text-xl sm:text-2xl font-bold text-white font-display mt-0.5">{totalClientsServed} Clientes</span>
-            <span className="text-purple-300 text-xxs font-mono mt-1">Soporte técnico integrado</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider font-semibold">Atención de Cuentas</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#0F172A] font-display mt-0.5">{totalClientsServed} Clientes</span>
+            <span className="text-purple-600 text-xxs font-mono font-bold mt-1">Soporte técnico integrado</span>
           </div>
-          <Shield className="w-6 h-6 text-pink-400" />
+          <Shield className="w-6 h-6 text-pink-600" />
         </div>
 
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-5 rounded-2xl flex items-center justify-between">
+        <div className="bg-white border border-purple-100/75 p-5 rounded-2xl flex items-center justify-between shadow-sm">
           <div className="flex flex-col">
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider">Eficiencia Operativa</span>
-            <span className="text-xl sm:text-2xl font-bold text-white font-display mt-0.5">98.2%</span>
-            <span className="text-emerald-400 text-xxs opacity-90 mt-1">Meta mensual superada</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider font-semibold">Eficiencia Operativa</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#0F172A] font-display mt-0.5">98.2%</span>
+            <span className="text-emerald-600 text-xxs font-bold mt-1">Meta mensual superada</span>
           </div>
-          <Award className="w-6 h-6 text-indigo-400" />
+          <Award className="w-6 h-6 text-indigo-600" />
         </div>
       </div>
 
       {/* Employees tabular layout matching SCREEN 10 exactly! */}
-      <div className="bg-[#0F172A]/40 border border-purple-500/10 rounded-2xl overflow-hidden shadow-xl text-left">
+      <div className="bg-white border border-purple-100/70 rounded-2xl overflow-hidden shadow-sm text-left">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs sm:text-sm">
+          <table className="w-full text-left text-xs sm:text-sm bg-white">
             <thead>
-              <tr className="border-b border-purple-500/10 bg-[#080d1a]/50 text-gray-400 font-mono text-xxs uppercase tracking-wider">
+              <tr className="border-b border-purple-100 bg-[#FBFBFF] text-[#475569] font-mono text-xxs uppercase tracking-wider">
                 <th className="py-3.5 px-4 w-28">ID Empleado</th>
                 <th className="py-3.5 px-4">Personal de Curaduría</th>
                 <th className="py-3.5 px-4">Cargo / Función</th>
@@ -123,12 +123,12 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
                 <th className="py-3.5 px-4 text-center w-20"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-purple-500/5">
+            <tbody className="divide-y divide-purple-50/50">
               {employees.map((emp) => (
-                <tr key={emp.id} className="hover:bg-purple-500/5 transition-colors group">
+                <tr key={emp.id} className="hover:bg-purple-50/20 transition-colors group">
                   
                   {/* ID */}
-                  <td className="py-3.5 px-4 font-mono text-purple-300 text-xs text-left">
+                  <td className="py-3.5 px-4 font-mono text-purple-600 font-bold text-xs text-left">
                     {emp.id}
                   </td>
 
@@ -138,29 +138,29 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
                       <img
                         src={emp.avatarUrl}
                         alt={emp.name}
-                        className="w-9 h-9 rounded-full object-cover border border-purple-500/25"
+                        className="w-9 h-9 rounded-full object-cover border border-purple-100"
                       />
                       <div>
-                        <div className="font-semibold text-white text-xs sm:text-sm">{emp.name}</div>
-                        <div className="text-[10px] text-gray-400 font-mono mt-0.5">{emp.email} • {emp.phone}</div>
+                        <div className="font-semibold text-[#0F172A] text-xs sm:text-sm">{emp.name}</div>
+                        <div className="text-[10px] text-[#64748B] font-mono mt-0.5">{emp.email} • {emp.phone}</div>
                       </div>
                     </div>
                   </td>
 
                   {/* Role */}
-                  <td className="py-3.5 px-4 text-gray-300 font-medium">
+                  <td className="py-3.5 px-4 text-[#334155] font-semibold">
                     {emp.role}
                   </td>
 
                   {/* Clients assigned */}
                   <td className="py-3.5 px-4 text-center">
-                    <span className="font-semibold font-mono text-purple-300">
+                    <span className="font-bold font-mono text-purple-600 bg-purple-50 px-2 py-0.5 rounded border border-purple-100">
                       {emp.clientsAssigned} clientes
                     </span>
                   </td>
 
                   {/* Joined Date */}
-                  <td className="py-3.5 px-4 text-center font-mono text-gray-400 text-xs">
+                  <td className="py-3.5 px-4 text-center font-mono text-[#64748B] text-xs font-semibold">
                     {emp.joinedDate}
                   </td>
 
@@ -168,7 +168,7 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
                   <td className="py-3.5 px-4 text-center">
                     <button
                       onClick={() => onRemoveEmployee(emp.id)}
-                      className="p-1.5 opacity-0 group-hover:opacity-100 text-gray-500 hover:text-pink-500 hover:bg-pink-500/10 rounded-lg transition-all cursor-pointer"
+                      className="p-1 px-2 text-xxs text-slate-500 hover:text-pink-600 hover:bg-pink-100 rounded-lg transition-all cursor-pointer border border-transparent hover:border-pink-200"
                       title="Dar de Baja"
                     >
                       Dar Baja
@@ -183,20 +183,20 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
 
       {/* Hire employee modal popup overlay */}
       {isAdding && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <form
             onSubmit={handleSubmit}
-            className="bg-[#0F172A] border border-[#A855F7]/30 rounded-3xl p-6 max-w-md w-full flex flex-col gap-4 animate-scaleUp text-left"
+            className="bg-white border border-purple-100 rounded-3xl p-6 max-w-md w-full flex flex-col gap-4 animate-scaleUp text-left shadow-xl"
           >
-            <div className="flex justify-between items-center pb-3 border-b border-purple-500/10">
-              <h3 className="text-white text-sm font-semibold font-display flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-purple-400" />
+            <div className="flex justify-between items-center pb-3 border-b border-purple-100">
+              <h3 className="text-[#0F172A] text-sm font-semibold font-display flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-purple-600" />
                 Registrar Nuevo Curador
               </h3>
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
-                className="text-gray-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-600"
               >
                 <X className="w-4.5 h-4.5" />
               </button>
@@ -204,23 +204,23 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
 
             <div className="flex flex-col gap-3">
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Nombre Completo</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Nombre Completo</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ej. Martín De la Torre"
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Puesto / Cargo</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Puesto / Cargo</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-2.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-2.5 py-2 text-xs text-[#0F172A] outline-none"
                 >
                   <option value="Specialist Curator">Specialist Curator</option>
                   <option value="Account Manager">Account Manager</option>
@@ -231,47 +231,47 @@ export default function AdminEmpleados({ employees, onAddEmployee, onRemoveEmplo
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Cuentas Asig.</label>
+                  <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Cuentas Asig.</label>
                   <input
                     type="number"
                     value={clients}
                     onChange={(e) => setClients(Number(e.target.value))}
-                    className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                    className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Teléfono</label>
+                  <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Teléfono</label>
                   <input
                     type="text"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+51..."
-                    className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                    className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Email Corporativo</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Email Corporativo</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="ejemplo@musicstore.com"
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                   required
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-purple-500/10">
+            <div className="flex justify-end gap-3 pt-3 border-t border-purple-100">
               <button
                 type="button"
                 onClick={() => setIsAdding(false)}
-                className="text-gray-400 hover:text-white text-xs px-4 py-2 font-medium"
+                className="text-slate-400 hover:text-slate-600 text-xs px-4 py-2 font-medium"
               >
                 Cancelar
               </button>

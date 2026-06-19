@@ -34,11 +34,67 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('inicio'); // client: inicio, catalogo, playlists, facturas. admin: dashboard, clientes, empleados, reportes
 
   // Database States (for real interactive state transformations!)
-  const [albums, setAlbums] = useState<Album[]>(initialAlbums);
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [playlists, setPlaylists] = useState<Playlist[]>(initialPlaylists);
   const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices);
   const [clients, setClients] = useState<ClientData[]>(initialClients);
   const [employees, setEmployees] = useState<EmployeeData[]>(initialEmployees);
+
+  // Fetch and convert real-time PostgreSQL record rows
+  React.useEffect(() => {
+    const fetchPgAlbums = async () => {
+      try {
+        const response = await fetch('/api/albums');
+        if (!response.ok) throw new Error('Fallo al obtener álbumes');
+        const jsonResult = await response.json();
+        
+        if (jsonResult.success && Array.isArray(jsonResult.data)) {
+          const parsed: Album[] = jsonResult.data.map((row: any) => {
+            const idNum = parseInt(row.album_id) || 1;
+            return {
+              id: String(row.album_id),
+              title: row.title,
+              artist: `Artist #${row.artist_id}`,
+              year: 1970 + (idNum % 54),
+              genre: ['Rock', 'Jazz', 'Metal', 'Latin', 'Pop', 'Classical', 'Blues'][idNum % 7],
+              price: 9.99 + (idNum % 16),
+              coverUrl: `https://images.unsplash.com/photo-${[
+                '1514525253161-7a46d19cd819', // vinyl/concert
+                '1511671782779-c97d3d27a1d4', // mic
+                '1470225620780-dba8ba36b745', // dj
+                '1505740420928-5e560c06d30e', // headphone
+                '1459749411175-04bf5292ceea', // concert
+                '1511379938547-c1f69419868d', // piano
+                '1506157786151-b8491531f063', // guitar
+              ][idNum % 7]}?w=300&h=300&fit=crop`,
+              country: ['USA', 'UK', 'Perú', 'Germany', 'Canada', 'Mexico'][idNum % 6],
+              isTrending: idNum % 3 === 0,
+              tracks: [
+                {
+                  id: `tr-${row.album_id}-1`,
+                  title: `Track 01 - ${row.title} Remasterizado`,
+                  artist: `Artist #${row.artist_id}`,
+                  duration: '3:45',
+                  price: 0.99
+                },
+                {
+                  id: `tr-${row.album_id}-2`,
+                  title: `Track 02 - ${row.title} Acoustic Version`,
+                  artist: `Artist #${row.artist_id}`,
+                  duration: '4:12',
+                  price: 0.99
+                }
+              ]
+            };
+          });
+          setAlbums(parsed);
+        }
+      } catch (err) {
+        console.error('Error al poblar base de datos en tiempo real:', err);
+      }
+    };
+    fetchPgAlbums();
+  }, []);
 
   // Music Player States
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
@@ -315,11 +371,11 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080d1a] text-white flex flex-col font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] flex flex-col font-sans transition-colors duration-300">
       
       {/* Background glowing gradients */}
-      <div className="fixed top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[130px] -z-10 pointer-events-none" />
-      <div className="fixed bottom-0 left-[-10%] w-[35%] h-[35%] rounded-full bg-pink-500/5 blur-[120px] -z-10 pointer-events-none" />
+      <div className="fixed top-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/5 blur-[130px] -z-10 pointer-events-none" />
+      <div className="fixed bottom-0 left-[-10%] w-[35%] h-[35%] rounded-full bg-pink-500/3 blur-[120px] -z-10 pointer-events-none" />
 
       {/* Global Header */}
       <Navbar

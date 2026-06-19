@@ -70,7 +70,7 @@ export default function BottomPlayer({
   const elapsedSecs = Math.floor((progress / 100) * totalSecs);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-24 bg-[#101622]/90 backdrop-blur-xl border-t border-[#A855F7]/20 z-50 px-6 py-4 flex flex-col justify-center">
+    <div className="fixed bottom-0 left-0 right-0 h-24 bg-white/95 backdrop-blur-xl border-t border-purple-100 z-50 px-6 py-4 flex flex-col justify-center shadow-[0_-8px_30px_rgba(15,23,42,0.06)]">
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between gap-4">
         
         {/* Left: Track Information with heart */}
@@ -78,15 +78,15 @@ export default function BottomPlayer({
           <img
             src={cover}
             alt={track.title}
-            className={`w-12 h-12 rounded-md object-cover border border-purple-500/20 shadow-[0_0_10px_rgba(168,85,247,0.15)] ${isPlaying ? 'animate-pulse' : ''}`}
+            className={`w-12 h-12 rounded-md object-cover border border-purple-100 shadow-sm ${isPlaying ? 'animate-pulse' : ''}`}
           />
           <div className="overflow-hidden hidden sm:block">
-            <h4 className="text-white text-xs sm:text-sm font-medium truncate">{track.title}</h4>
-            <p className="text-gray-400 text-xxs sm:text-xs truncate">{track.artist}</p>
+            <h4 className="text-[#0F172A] text-xs sm:text-sm font-semibold truncate">{track.title}</h4>
+            <p className="text-[#64748B] text-xxs sm:text-xs truncate">{track.artist}</p>
           </div>
           <button
             onClick={() => setLiked(!liked)}
-            className={`p-1.5 rounded-full transition-colors ${liked ? 'text-pink-500' : 'text-gray-400 hover:text-white'}`}
+            className={`p-1.5 rounded-full transition-colors ${liked ? 'text-pink-500' : 'text-slate-400 hover:text-purple-600'}`}
           >
             <Heart className="w-4 h-4 fill-current transition-transform duration-300 active:scale-150" />
           </button>
@@ -97,38 +97,38 @@ export default function BottomPlayer({
           <div className="flex items-center gap-5">
             <button
               onClick={() => setShuffle(!shuffle)}
-              className={`p-1.5 rounded-full transition-colors ${shuffle ? 'text-[#ddb7ff] drop-shadow-[0_0_5px_#ddb7ff]' : 'text-gray-400 hover:text-white'}`}
+              className={`p-1.5 rounded-full transition-colors ${shuffle ? 'text-purple-600 font-bold' : 'text-slate-400 hover:text-[#0F172A]'}`}
               title="Aleatorio"
             >
               <Shuffle className="w-4 h-4" />
             </button>
 
-            <button onClick={onPrev} className="p-1.5 text-gray-400 hover:text-white transition-colors" title="Anterior">
+            <button onClick={onPrev} className="p-1.5 text-slate-400 hover:text-[#0F172A] transition-colors" title="Anterior">
               <SkipBack className="w-4 h-4" />
             </button>
 
             <button
               onClick={onTogglePlay}
-              className="p-3 bg-gradient-to-r from-[#A855F7] to-[#EC4899] text-white rounded-full hover:scale-105 transition-transform duration-200 shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+              className="p-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full hover:scale-105 transition-transform duration-200 shadow-md shadow-pink-500/20"
               title={isPlaying ? 'Pausa' : 'Reproducir'}
             >
               {isPlaying ? <Pause className="w-5 h-5 fill-white" /> : <Play className="w-5 h-5 fill-white ml-0.5" />}
             </button>
 
-            <button onClick={onNext} className="p-1.5 text-gray-400 hover:text-white transition-colors" title="Siguiente">
+            <button onClick={onNext} className="p-1.5 text-slate-400 hover:text-[#0F172A] transition-colors" title="Siguiente">
               <SkipForward className="w-4 h-4" />
             </button>
 
             <button
               onClick={() => setRepeat(!repeat)}
-              className={`p-1.5 rounded-full transition-colors ${repeat ? 'text-[#ddb7ff] drop-shadow-[0_0_5px_#ddb7ff]' : 'text-gray-400 hover:text-white'}`}
+              className={`p-1.5 rounded-full transition-colors ${repeat ? 'text-purple-600 font-bold' : 'text-slate-400 hover:text-[#0F172A]'}`}
               title="Repetir"
             >
               <Repeat className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="flex items-center gap-2 w-full text-xxs sm:text-xs text-gray-400">
+          <div className="flex items-center gap-2 w-full text-xxs sm:text-xs text-[#64748B]">
             <span>{formatSecondsToTime(elapsedSecs)}</span>
             <div className="relative flex-1 group h-4 flex items-center cursor-pointer">
               <input
@@ -137,10 +137,10 @@ export default function BottomPlayer({
                 max="100"
                 value={progress}
                 onChange={(e) => setProgress(Number(e.target.value))}
-                className="w-full h-1 bg bg-[#1d2433] rounded-lg appearance-none cursor-pointer accent-[#ddb7ff] focus:outline-none"
+                className="w-full h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-purple-600 focus:outline-none"
               />
               <div
-                className="absolute left-0 h-1 bg-gradient-to-r from-[#842bd2] to-[#b76dff] rounded-lg pointer-events-none"
+                className="absolute left-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg pointer-events-none"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -150,11 +150,11 @@ export default function BottomPlayer({
 
         {/* Right: Extra controls & volume */}
         <div className="flex items-center justify-end gap-3 w-1/4 min-w-[120px]">
-          <button className="p-1.5 text-gray-400 hover:text-white transition-colors hidden md:block" title="Cola de reproducción">
+          <button className="p-1.5 text-slate-400 hover:text-[#0F172A] transition-colors hidden md:block" title="Cola de reproducción">
             <ListMusic className="w-4 h-4" />
           </button>
 
-          <button onClick={() => setIsMuted(!isMuted)} className="p-1.5 text-gray-400 hover:text-white transition-colors" title="Silenciar">
+          <button onClick={() => setIsMuted(!isMuted)} className="p-1.5 text-slate-400 hover:text-[#0F172A] transition-colors" title="Silenciar">
             {isMuted || volume === 0 ? <VolumeX className="w-4 h-4 text-pink-500" /> : <Volume2 className="w-4 h-4" />}
           </button>
 
@@ -167,10 +167,10 @@ export default function BottomPlayer({
               setVolume(Number(e.target.value));
               if (isMuted) setIsMuted(false);
             }}
-            className="w-16 sm:w-20 h-1 bg-[#1d2433] rounded-lg appearance-none cursor-pointer accent-[#ffb0cd] focus:outline-none"
+            className="w-16 sm:w-20 h-1 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-purple-600 focus:outline-none"
           />
 
-          <button className="p-1.5 text-gray-400 hover:text-white transition-colors hidden sm:block" title="Pantalla Completa">
+          <button className="p-1.5 text-slate-400 hover:text-[#0F172A] transition-colors hidden sm:block" title="Pantalla Completa">
             <Maximize2 className="w-4 h-4" />
           </button>
         </div>

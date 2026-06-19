@@ -99,13 +99,13 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
       {/* Top action block */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-display font-medium text-white mb-0.5">Control de Clientes</h2>
-          <p className="text-gray-400 text-xs">Directorio y auditoría de consumos de cuentas registradas</p>
+          <h2 className="text-xl sm:text-2xl font-display font-semibold text-[#0F172A] mb-0.5">Control de Clientes</h2>
+          <p className="text-[#64748B] text-xs">Directorio y auditoría de consumos de cuentas registradas</p>
         </div>
 
         <button
           onClick={startAdd}
-          className="bg-[#A855F7] hover:bg-purple-600 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-1.5 cursor-pointer"
+          className="bg-purple-600 hover:bg-purple-700 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-1.5 cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Agregar Cliente</span>
@@ -114,33 +114,33 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
       {/* Metrics Header bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-4 rounded-xl flex justify-between items-center">
+        <div className="bg-white border border-purple-100/75 p-4 rounded-xl flex justify-between items-center shadow-sm">
           <div>
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider block">Total Clientes</span>
-            <span className="text-xl font-bold font-display text-white">{clients.length} Miembros</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block font-semibold">Total Clientes</span>
+            <span className="text-xl font-bold font-display text-[#0F172A]">{clients.length} Miembros</span>
           </div>
-          <Users className="w-5 h-5 text-purple-400" />
+          <Users className="w-5 h-5 text-purple-600" />
         </div>
 
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-4 rounded-xl flex justify-between items-center">
+        <div className="bg-white border border-purple-100/75 p-4 rounded-xl flex justify-between items-center shadow-sm">
           <div>
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider block">Gasto Promedio</span>
-            <span className="text-xl font-bold font-display text-white">S/. {averageSpent.toFixed(2)}</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block font-semibold">Gasto Promedio</span>
+            <span className="text-xl font-bold font-display text-[#0F172A]">S/. {averageSpent.toFixed(2)}</span>
           </div>
-          <DollarSign className="w-5 h-5 text-pink-400" />
+          <DollarSign className="w-5 h-5 text-pink-600" />
         </div>
 
-        <div className="bg-[#0F172A]/50 border border-purple-500/10 p-4 rounded-xl flex justify-between items-center">
+        <div className="bg-white border border-purple-100/75 p-4 rounded-xl flex justify-between items-center shadow-sm">
           <div>
-            <span className="text-gray-400 text-xxs font-mono uppercase tracking-wider block">Recaudado</span>
-            <span className="text-xl font-bold font-display text-white">S/. {totalSpentAll.toFixed(2)}</span>
+            <span className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block font-semibold">Recaudado</span>
+            <span className="text-xl font-bold font-display text-[#0F172A]">S/. {totalSpentAll.toFixed(2)}</span>
           </div>
-          <Globe className="w-5 h-5 text-indigo-400" />
+          <Globe className="w-5 h-5 text-indigo-600" />
         </div>
       </div>
 
       {/* Search and Quick Filters bar */}
-      <div className="bg-[#0F172A]/40 border border-purple-500/10 rounded-2xl p-5 flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white border border-purple-100/75 rounded-2xl p-5 flex flex-col md:flex-row gap-4 justify-between items-center shadow-sm">
         
         {/* Country filter pills */}
         <div className="flex flex-wrap gap-1.5 w-full md:w-auto">
@@ -152,8 +152,8 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
                 onClick={() => setSelectedCountry(country)}
                 className={`py-1 px-3 text-xxs font-mono uppercase tracking-wide rounded-lg border transition-all cursor-pointer ${
                   active
-                    ? 'bg-purple-600/20 text-purple-300 border-purple-500/40'
-                    : 'bg-transparent text-gray-400 border-transparent hover:text-white hover:bg-slate-800/40'
+                    ? 'bg-purple-100 border-purple-200 text-purple-700 font-bold'
+                    : 'bg-transparent text-[#64748B] border-transparent hover:text-[#0F172A] hover:bg-slate-100'
                 }`}
               >
                 {country === 'Todos' ? 'Cualquier País 🌎' : country}
@@ -164,18 +164,18 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
         {/* Real-time search controller */}
         <div className="relative w-full md:w-80 shrink-0">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-purple-400/80" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-purple-600" />
           <input
             type="text"
             placeholder="Buscar por ID, nombre o correo..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#1e293b]/50 border border-purple-500/15 rounded-xl py-2 pl-11 pr-4 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors"
+            className="w-full bg-white border border-purple-100 rounded-xl py-2 pl-11 pr-4 text-xs text-[#0F172A] placeholder-slate-400 focus:outline-none focus:border-purple-300 transition-colors shadow-sm"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#0F172A]"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -184,11 +184,11 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
       </div>
 
       {/* Client Table Grid matching SCREEN 8 exactly! */}
-      <div className="bg-[#0F172A]/40 border border-purple-500/10 rounded-2xl overflow-hidden shadow-xl font-sans">
+      <div className="bg-white border border-purple-100/70 rounded-2xl overflow-hidden shadow-sm font-sans">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs sm:text-sm">
+          <table className="w-full text-left text-xs sm:text-sm bg-white">
             <thead>
-              <tr className="border-b border-purple-500/10 bg-[#080d1a]/50 text-gray-400 font-mono text-xxs uppercase tracking-wider">
+              <tr className="border-b border-purple-100 bg-[#FBFBFF] text-[#475569] font-mono text-xxs uppercase tracking-wider">
                 <th className="py-3.5 px-4 w-24">ID Registro</th>
                 <th className="py-3.5 px-4 text-center w-12"></th>
                 <th className="py-3.5 px-4">Cliente / Afiliado</th>
@@ -198,15 +198,15 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
                 <th className="py-3.5 px-4 text-center w-20">Acción</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-purple-500/5">
+            <tbody className="divide-y divide-purple-50/50">
               {filteredClients.map((cl) => {
                 const partsName = cl.name.split(' ');
                 const initials = partsName.map((n) => n.charAt(0)).join('').substring(0, 2);
                 return (
-                  <tr key={cl.id} className="hover:bg-purple-500/5 transition-colors">
+                  <tr key={cl.id} className="hover:bg-purple-50/20 transition-all">
                     
                     {/* Client ID */}
-                    <td className="py-3.5 px-4 font-mono text-xs text-purple-300">
+                    <td className="py-3.5 px-4 font-mono text-xs text-purple-600 font-bold">
                       {cl.id}
                     </td>
 
@@ -222,28 +222,28 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
                     {/* Client Name with mobile contact */}
                     <td className="py-3.5 px-3">
-                      <div className="font-semibold text-white text-xs sm:text-sm">
+                      <div className="font-semibold text-[#0F172A] text-xs sm:text-sm">
                         {cl.name}
                       </div>
-                      <div className="text-gray-400 font-mono text-[10px] mt-0.5">
+                      <div className="text-[#64748B] font-mono text-[10px] mt-0.5">
                         {cl.phone}
                       </div>
                     </td>
 
                     {/* Client Email */}
-                    <td className="py-3.5 px-4 font-mono text-gray-300 text-xs hidden md:table-cell">
+                    <td className="py-3.5 px-4 font-mono text-[#334155] text-xs hidden md:table-cell">
                       {cl.email}
                     </td>
 
                     {/* Country Badge */}
                     <td className="py-3.5 px-4 text-center">
-                      <span className="inline-flex items-center gap-1 bg-[#1e293b]/70 border border-purple-500/10 px-2.5 py-1 rounded-lg text-xxs text-gray-300">
+                      <span className="inline-flex items-center gap-1 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-lg text-xxs text-[#475569] font-medium">
                         {cl.country}
                       </span>
                     </td>
 
                     {/* Total spent in S/. */}
-                    <td className="py-3.5 px-4 text-right font-mono text-pink-400 font-bold text-xs sm:text-sm">
+                    <td className="py-3.5 px-4 text-right font-mono text-pink-600 font-bold text-xs sm:text-sm">
                       S/. {cl.totalSpent.toFixed(2)}
                     </td>
 
@@ -251,9 +251,9 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
                     <td className="py-3.5 px-4 text-center">
                       <button
                         onClick={() => startEdit(cl)}
-                        className="p-1 px-2.5 bg-purple-600/20 hover:bg-[#A855F7] text-white rounded-lg text-xxs transition-colors flex items-center gap-1 cursor-pointer"
+                        className="p-1 px-2.5 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200/50 rounded-lg text-xxs transition-colors flex items-center gap-1 cursor-pointer font-semibold mx-auto"
                       >
-                        <Edit className="w-3 h-3" />
+                        <Edit className="w-3 h-3 text-purple-600" />
                         <span>Editar</span>
                       </button>
                     </td>
@@ -267,13 +267,13 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
       {/* Edit or Add Client Modal Popup */}
       {(editingClient || isAdding) && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <form
             onSubmit={editingClient ? handleSaveEdit : handleSaveAdd}
-            className="bg-[#0F172A] border border-[#A855F7]/30 rounded-3xl p-6 max-w-md w-full flex flex-col gap-4 animate-scaleUp"
+            className="bg-white border border-purple-100 rounded-3xl p-6 max-w-md w-full flex flex-col gap-4 animate-scaleUp shadow-xl"
           >
-            <div className="flex justify-between items-center pb-3 border-b border-purple-500/10">
-              <h3 className="text-white text-sm font-semibold font-display">
+            <div className="flex justify-between items-center pb-3 border-b border-purple-100">
+              <h3 className="text-[#0F172A] text-sm font-semibold font-display">
                 {editingClient ? `Editar Cliente ${editingClient.id}` : 'Registrar Nuevo Cliente'}
               </h3>
               <button
@@ -282,7 +282,7 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
                   setEditingClient(null);
                   setIsAdding(false);
                 }}
-                className="text-gray-400 hover:text-white"
+                className="text-slate-400 hover:text-slate-600"
               >
                 <X className="w-4.5 h-4.5" />
               </button>
@@ -290,34 +290,34 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
             <div className="flex flex-col gap-3">
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Nombre Completo</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Nombre Completo</label>
                 <input
                   type="text"
                   value={formName}
                   onChange={(e) => setFormName(e.target.value)}
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Correo Electrónico</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Correo Electrónico</label>
                 <input
                   type="email"
                   value={formEmail}
                   onChange={(e) => setFormEmail(e.target.value)}
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Teléfono</label>
+                <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Teléfono</label>
                 <input
                   type="text"
                   value={formPhone}
                   onChange={(e) => setFormPhone(e.target.value)}
-                  className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                  className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                   placeholder="+51..."
                   required
                 />
@@ -325,11 +325,11 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">País</label>
+                  <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">País</label>
                   <select
                     value={formCountry}
                     onChange={(e) => setFormCountry(e.target.value)}
-                    className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-2.5 py-2 text-xs text-white"
+                    className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-2.5 py-2 text-xs text-[#0F172A] outline-none"
                   >
                     <option value="Perú">Perú</option>
                     <option value="Colombia">Colombia</option>
@@ -340,26 +340,26 @@ export default function AdminClientes({ clients, onUpdateClient, onAddClient }: 
                 </div>
 
                 <div>
-                  <label className="text-gray-400 text-xxs font-mono uppercase tracking-wider block mb-1">Total Gastado (S/.)</label>
+                  <label className="text-[#64748B] text-xxs font-mono uppercase tracking-wider block mb-1 font-semibold">Total Gastado (S/.)</label>
                   <input
                     type="number"
                     value={formSpent}
                     onChange={(e) => setFormSpent(Number(e.target.value))}
-                    className="w-full bg-[#1e293b] border border-purple-500/15 rounded-xl px-3.5 py-2 text-xs text-white"
+                    className="w-full bg-white border border-purple-100 focus:border-purple-300 rounded-xl px-3.5 py-2 text-xs text-[#0F172A] outline-none"
                     required
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-3 border-t border-purple-500/10">
+            <div className="flex justify-end gap-3 pt-3 border-t border-purple-100">
               <button
                 type="button"
                 onClick={() => {
                   setEditingClient(null);
                   setIsAdding(false);
                 }}
-                className="text-gray-400 hover:text-white text-xs px-4 py-2 font-medium"
+                className="text-slate-400 hover:text-slate-600 text-xs px-4 py-2 font-medium"
               >
                 Cancelar
               </button>
