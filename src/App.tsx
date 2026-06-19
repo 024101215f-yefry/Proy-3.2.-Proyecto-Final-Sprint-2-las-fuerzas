@@ -42,24 +42,70 @@ export default function App() {
 
   // Fetch and convert real-time PostgreSQL record rows
   React.useEffect(() => {
-    const fetchPgAlbums = async () => {
+    const fetchPgData = async () => {
+      // 1. Fetch Albums
       try {
-        const response = await fetch('/api/albums');
-        if (!response.ok) throw new Error('Fallo al obtener álbumes');
-        const jsonResult = await response.json();
-        
-        if (jsonResult.success && Array.isArray(jsonResult.data)) {
-          const parsed: Album[] = jsonResult.data.map((row: any) => {
+        let rawAlbums: any[] = [];
+        let albumsFetched = false;
+
+        try {
+          const response = await fetch('/api/albums');
+          if (response.ok) {
+            const jsonResult = await response.json();
+            if (jsonResult.success && Array.isArray(jsonResult.data)) {
+              rawAlbums = jsonResult.data;
+              albumsFetched = true;
+            }
+          }
+        } catch (apiErr) {
+          console.warn('Fallo el fetch API de álbumes, intentando fallback de Neon directo:', apiErr);
+        }
+
+        if (!albumsFetched) {
+          const url = import.meta.env.VITE_POSTGRES_URL;
+          if (url) {
+            try {
+              const { neon } = await import('@neondatabase/serverless');
+              const sql = neon(url);
+              const data = await sql`SELECT album_id, title, artist_id FROM album LIMIT 20;`;
+              if (Array.isArray(data)) {
+                rawAlbums = data;
+              }
+            } catch (neonErr) {
+              console.error('Fallback directo de Neon en cliente falló:', neonErr);
+            }
+          }
+        }
+
+        if (Array.isArray(rawAlbums) && rawAlbums.length > 0) {
+          const parsed: Album[] = rawAlbums.map((row: any) => {
             const idNum = parseInt(row.album_id) || 1;
+            
+            // If the row already has a parsed list of tracks, use them
+            if (row.tracks && Array.isArray(row.tracks)) {
+              return {
+                id: String(row.id || row.album_id),
+                title: row.title,
+                artist: row.artist,
+                year: Number(row.year) || 2024,
+                genre: row.genre || 'Rock',
+                price: Number(row.price) || 9.99,
+                coverUrl: row.coverUrl,
+                country: row.country || 'Perú',
+                isTrending: !!row.isTrending,
+                tracks: row.tracks
+              };
+            }
+
             return {
               id: String(row.album_id),
-              title: row.title,
-              artist: `Artist #${row.artist_id}`,
+              title: row.title || 'Álbum Sin Título',
+              artist: `Artist #${row.artist_id || 'Desconocido'}`,
               year: 1970 + (idNum % 54),
               genre: ['Rock', 'Jazz', 'Metal', 'Latin', 'Pop', 'Classical', 'Blues'][idNum % 7],
               price: 9.99 + (idNum % 16),
               coverUrl: `https://images.unsplash.com/photo-${[
-                '1514525253161-7a46d19cd819', // vinyl/concert
+                '1514525253161-7a46d19cd819', // vinyl
                 '1511671782779-c97d3d27a1d4', // mic
                 '1470225620780-dba8ba36b745', // dj
                 '1505740420928-5e560c06d30e', // headphone
@@ -72,15 +118,15 @@ export default function App() {
               tracks: [
                 {
                   id: `tr-${row.album_id}-1`,
-                  title: `Track 01 - ${row.title} Remasterizado`,
-                  artist: `Artist #${row.artist_id}`,
+                  title: `Track 01 - ${row.title || 'Tema'} Remasterizado`,
+                  artist: `Artist #${row.artist_id || 'Desconocido'}`,
                   duration: '3:45',
                   price: 0.99
                 },
                 {
                   id: `tr-${row.album_id}-2`,
-                  title: `Track 02 - ${row.title} Acoustic Version`,
-                  artist: `Artist #${row.artist_id}`,
+                  title: `Track 02 - ${row.title || 'Tema'} Acoustic Version`,
+                  artist: `Artist #${row.artist_id || 'Desconocido'}`,
                   duration: '4:12',
                   price: 0.99
                 }
@@ -90,10 +136,50 @@ export default function App() {
           setAlbums(parsed);
         }
       } catch (err) {
-        console.error('Error al poblar base de datos en tiempo real:', err);
+        console.error('Error al poblar álbumes de base de datos:', err);
+      }
+
+      // 2. Fetch Clients (Customers)
+      try {
+        const response = await fetch('/api/clients');
+        if (response.ok) {
+          const jsonResult = await response.json();
+          if (jsonResult.success && Array.isArray(jsonResult.data) && jsonResult.data.length > 0) {
+            setClients(jsonResult.data);
+          }
+        }
+      } catch (err) {
+        console.warn('No se pudieron obtener los clientes reales, usando iniciales:', err);
+      }
+
+      // 3. Fetch Employees
+      try {
+        const response = await fetch('/api/employees');
+        if (response.ok) {
+          const jsonResult = await response.json();
+          if (jsonResult.success && Array.isArray(jsonResult.data) && jsonResult.data.length > 0) {
+            setEmployees(jsonResult.data);
+          }
+        }
+      } catch (err) {
+        console.warn('No se pudieron obtener los empleados reales, usando iniciales:', err);
+      }
+
+      // 4. Fetch Invoices
+      try {
+        const response = await fetch('/api/invoices');
+        if (response.ok) {
+          const jsonResult = await response.json();
+          if (jsonResult.success && Array.isArray(jsonResult.data) && jsonResult.data.length > 0) {
+            setInvoices(jsonResult.data);
+          }
+        }
+      } catch (err) {
+        console.warn('No se pudieron obtener las facturas reales, usando iniciales:', err);
       }
     };
-    fetchPgAlbums();
+
+    fetchPgData();
   }, []);
 
   // Music Player States

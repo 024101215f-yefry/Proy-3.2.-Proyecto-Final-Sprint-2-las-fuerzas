@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Database, RefreshCw, Search, CheckCircle, AlertTriangle, Disc, Loader2, Server } from 'lucide-react';
+import { neon } from '@neondatabase/serverless';
 
 interface PostgresAlbum {
   album_id: number | string;
@@ -47,27 +48,56 @@ export default function PostgresAlbumTable() {
     else setLoading(true);
     
     setError('');
+    let dataLoaded = false;
+
+    // First try: Fetch via Vercel / Express Backend Serverless API (hides secrets, recommended)
     try {
       const response = await fetch('/api/albums');
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+      if (response.ok) {
+        const jsonResult = await response.json();
+        if (jsonResult.success && Array.isArray(jsonResult.data)) {
+          const parsedData = jsonResult.data.map((row: any) => ({
+            album_id: row.album_id ?? row.id ?? '',
+            title: row.title ?? '',
+            artist_id: row.artist ?? row.artist_id ?? ''
+          }));
+          setAlbums(parsedData);
+          dataLoaded = true;
+        }
       }
-      const result = await response.json();
-      if (result.success) {
-        setAlbums(result.data || []);
-      } else {
-        throw new Error(result.error || 'No se pudieron recuperar los registros de album.');
-      }
-    } catch (err: any) {
-      console.error(err);
-      setError(
-        err.message || 
-        'No se pudo establecer conexión con PostgreSQL. Por favor, asegúrate de que el servidor esté activo y la base de datos sea accesible.'
-      );
-    } finally {
-      setLoading(false);
-      setIsRefreshing(false);
+    } catch (apiErr) {
+      console.warn("Could not fetch from serverless API, trying browser direct neon connection:", apiErr);
     }
+
+    // Second try: Client-side direct connection if environment variables exist at runtime in client
+    if (!dataLoaded) {
+      try {
+        const url = import.meta.env.VITE_POSTGRES_URL;
+        if (!url) {
+          throw new Error('La variable de entorno VITE_POSTGRES_URL no está configurada.');
+        }
+        const sql = neon(url);
+        const data = await sql`SELECT album_id, title, artist_id FROM album LIMIT 20;`;
+        
+        // Map the results to match our PostgresAlbum interface and ensure any potential formatting issues are structured
+        const parsedData = (data || []).map((row: any) => ({
+          album_id: row.album_id ?? '',
+          title: row.title ?? '',
+          artist_id: row.artist_id ?? ''
+        }));
+        
+        setAlbums(parsedData);
+      } catch (err: any) {
+        console.error("Neon PostgreSQL direct client fetch error:", err);
+        setError(
+          err.message || 
+          'No se pudo establecer conexión con PostgreSQL. Por favor, asegúrate de que el servidor o la API estén activos.'
+        );
+      }
+    }
+
+    setLoading(false);
+    setIsRefreshing(false);
   };
 
   useEffect(() => {
